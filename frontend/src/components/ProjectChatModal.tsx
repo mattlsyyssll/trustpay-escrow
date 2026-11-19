@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { authFetch } from '@/lib/api';
 import { useWalletStore } from '@/store/walletStore';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 export interface ChatMessage {
   id: string;
@@ -122,6 +123,8 @@ export function ProjectChatModal({
       scrollToBottom();
     }
   }, [messages, isOpen]);
+
+  useEscapeKey(onClose, isOpen);
 
   const handleSendMessage = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();

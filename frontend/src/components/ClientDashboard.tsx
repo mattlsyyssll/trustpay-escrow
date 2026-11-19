@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useWalletStore } from '@/store/walletStore';
 import { authFetch } from '@/lib/api';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 import { Milestone, Project, Applicant } from '@/types';
 import { ImageLightboxModal } from './ImageLightboxModal';
@@ -550,6 +551,9 @@ export function ClientDashboard({ defaultTab = 'projects' }: ClientDashboardProp
     if (!applicant.id) return;
     await handleAcceptProposal(applicant.id);
   };
+
+  useEscapeKey(() => setShowAddMilestoneModal(false), showAddMilestoneModal);
+  useEscapeKey(() => setAuditProject(null), Boolean(auditProject));
 
   return (
     <div className="w-full min-h-screen bg-[#121212] text-[#f4f4f5] font-sans p-4 sm:p-6 md:p-10 transition-colors duration-200">

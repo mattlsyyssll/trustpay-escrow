@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useWalletStore } from '@/store/walletStore';
 import { authFetch } from '@/lib/api';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 import { Milestone, Project, Proposal } from '@/types';
 import { ImageLightboxModal } from './ImageLightboxModal';
@@ -362,6 +363,9 @@ export function FreelancerDashboard() {
       setIsSubmittingProposal(false);
     }
   };
+
+  useEscapeKey(() => setViewingProjectDetails(null), Boolean(viewingProjectDetails));
+  useEscapeKey(() => setSelectedProject(null), Boolean(selectedProject));
 
   return (
     <div className="w-full min-h-screen bg-[#121212] text-[#f4f4f5] font-sans p-3 sm:p-6 md:p-10 transition-colors duration-200">

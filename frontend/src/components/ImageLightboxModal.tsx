@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 interface ImageLightboxModalProps {
   imageUrl: string | null;
@@ -11,6 +12,8 @@ interface ImageLightboxModalProps {
 
 export function ImageLightboxModal({ imageUrl, imageAlt = 'Project File Attachment', onClose }: ImageLightboxModalProps) {
   const [zoomLevel, setZoomLevel] = useState<number>(1);
+
+  useEscapeKey(onClose, Boolean(imageUrl));
 
   if (!imageUrl) return null;
 

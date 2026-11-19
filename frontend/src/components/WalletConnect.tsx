@@ -5,6 +5,7 @@ import { isConnected, requestAccess, getNetworkDetails, setAllowed, signTransact
 import { toast } from "sonner";
 import { useWalletStore } from "@/store/walletStore";
 import { useRouter } from "next/navigation";
+import { useEscapeKey } from "@/hooks/useEscapeKey";
 
 const getErrorMessage = (err: any, prefix = ""): string => {
   let msg = "An unknown error occurred";
@@ -48,6 +49,11 @@ export default function WalletConnect() {
   const [tempSignedXdr, setTempSignedXdr] = useState("");
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
+  useEscapeKey(() => {
+    setShowEmailModal(false);
+    setIsConnecting(false);
+  }, showEmailModal);
+  useEscapeKey(() => setShowXBullModal(false), showXBullModal);
   const router = useRouter();
 
   useEffect(() => {
